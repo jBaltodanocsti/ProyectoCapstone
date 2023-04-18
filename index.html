@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+    crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <title>Calculadora de valor de inmueble</title>
+  <!-- Agrega los archivos CSS de Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form>
+          <div class="form-group">
+            <label for="input1">Metros cuadrados</label>
+            <input type="text" class="form-control" id="Metros_cuadrados">
+          </div>
+          <div class="form-group">
+            <label for="input2">Distrito</label>
+            <input type="text" class="form-control" id="distrito">
+          </div>
+          <div class="form-group">
+            <label for="input1">Antiguedad</label>
+            <input type="text" class="form-control" id="antiguedad">
+          </div>
+          <div class="form-group">
+            <label for="input1">Desgaste</label>
+            <input type="text" class="form-control" id="desgaste">
+          </div>
+          <div class="form-group">
+            <label for="input3">Dormitorios</label>
+            <input type="text" class="form-control" id="dormitorios">
+          </div>
+          <div class="form-group">
+            <label for="input3">Baños</label>
+            <input type="text" class="form-control" id="baños">
+          </div>
+          <div class="text-center">
+            <button id="calcular-btn" type="submit" class="btn btn-primary">Calcular</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agrega los archivos JS de Bootstrap al final del body -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script>
+    // Espera a que se cargue el documento
+    $(document).ready(function () {
+
+      // Cuando se hace clic en el botón "Calcular"
+      $('#calcular-btn').click(function (event) {
+
+        // Previene que el formulario se envíe automáticamente
+        event.preventDefault();
+
+        // Obtiene los valores de los campos de entrada
+        var metros_cuadrados = parseInt($('#Metros_cuadrados').val());
+        var distrito = parseInt($('#distrito').val());
+        var antiguedad = parseInt($('#antiguedad').val());
+        var desgaste = parseInt($('#desgaste').val());
+        var dormitorios = parseInt($('#dormitorios').val());
+        var baños = parseInt($('#baños').val());
+
+        // Envía los datos al servidor web en formato JSON
+        debugger;
+        $.ajax({
+          url: 'http://localhost:8000/calcular',
+          method: 'POST',
+          data: JSON.stringify({
+            metros_cuadrados: metros_cuadrados,
+            distrito: distrito,
+            antiguedad: antiguedad,
+            desgaste: desgaste,
+            dormitorios: dormitorios,
+            baños: baños
+          }),
+          contentType: 'application/json',
+          success: function (response) {
+            // Muestra la respuesta del servidor en un elemento con ID "resultado"
+            $('#resultado').text(response.resultado);
+          }
+        });
+
+        // Envía los datos al servidor web en formato JSON
+        /*$.ajax({
+          url: 'http://localhost:8000/calcular',
+          method: 'POST',
+          data: JSON.stringify({
+            "Inmueble": {
+              "metros_cuadrados": metros_cuadrados,
+              "distrito": distrito,
+              "antiguedad": antiguedad,
+              "desgaste": desgaste,
+              "dormitorios": dormitorios,
+              "baños": baños
+            }
+          }),
+          contentType: 'application/json',
+          success: function (response) {
+            // Muestra la respuesta del servidor en un elemento con ID "resultado"
+            $('#resultado').text(response.resultado);
+          }
+        });
+
+*/
+      });
+    });
+  </script>
+
+</body>
+
+</html>
